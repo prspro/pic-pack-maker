@@ -1,45 +1,52 @@
-import { useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Grid from "./components/Grid/Grid";
+import PictureHolder from "./components/PictureHolder";
+import Container from "./components/Container";
+import {
+	PictureContext,
+	PictureDispatchContext,
+	PictureProvider,
+} from "./context/PictureContext";
+import {
+	pictureActionMap,
+	type PictureActionType,
+} from "./reducers/PicturesReducer";
 
 function App() {
-	const [count, setCount] = useState(0);
+	const pictureList = useContext(PictureContext);
+	const dispatch = useContext(PictureDispatchContext);
+
+	const handleAddPicture = (picture: string) => {
+		dispatch?.({
+			type: pictureActionMap.add as PictureActionType,
+			payload: {
+				id: 3,
+				value: picture,
+				name: "test",
+			},
+		});
+	};
 
 	return (
 		<>
-			<div>
-				<a href="https://vite.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-			</div>
-			<h1>Vite + React + test commmit</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
-			<Grid>
-				<Grid.Cell>123</Grid.Cell>
-				<Grid.Cell>123</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-				<Grid.Cell>123s</Grid.Cell>
-			</Grid>
+			<PictureProvider>
+				<Container>
+					<Grid>
+						{pictureList?.map((picture, idx) => (
+							<Grid.Cell key={idx}>
+								<PictureHolder picture={picture} />
+							</Grid.Cell>
+						))}
+						<Grid.Cell>
+							<button onClick={() => handleAddPicture(viteLogo)}>Add</button>
+						</Grid.Cell>
+						<Grid.Cell>Save</Grid.Cell>
+					</Grid>
+				</Container>
+			</PictureProvider>
 		</>
 	);
 }
