@@ -1,9 +1,7 @@
-import { memo, useContext, type FC } from "react";
+import { memo } from "react";
 import placeholder from "../../assets/placeholder.svg";
 import styles from "./index.module.sass";
 import clsx from "clsx";
-import usePictureHolder from "./usePictureHolder";
-// import PictureContext from "../../context/PictureContext";
 import type { Picture } from "../../types";
 
 interface PictureHolderProps {

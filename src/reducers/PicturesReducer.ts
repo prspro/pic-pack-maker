@@ -8,12 +8,15 @@ import {
 function PicturesReducer(pictures: Picture[], action: PictureAction) {
 	switch (action.type) {
 		case pictureActionMap.add: {
+			const lastId = pictures[pictures.length - 1].id || 0;
 			return [
 				...pictures,
 				{
-					id: action.payload.id,
+					// id: action.payload.id,
+					id: lastId + 1,
 					value: action.payload.value,
-					name: action.payload.name,
+					// name: action.payload.name,
+					name: (lastId + 1).toString(),
 				},
 			];
 		}
@@ -38,5 +41,4 @@ function PicturesReducer(pictures: Picture[], action: PictureAction) {
 	}
 }
 
-export { PicturesReducer, pictureActionMap };
-export type { PictureActionType, Picture };
+export { PicturesReducer };

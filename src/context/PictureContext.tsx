@@ -1,6 +1,6 @@
 import { createContext, useReducer, type ReactNode } from "react";
-import { PicturesReducer, type Picture } from "../reducers/PicturesReducer";
-import type { PictureAction } from "../types";
+import { PicturesReducer } from "../reducers/PicturesReducer";
+import type { Picture, PictureAction } from "../types";
 
 interface PictureProviderProps {
 	children: ReactNode | ReactNode[];

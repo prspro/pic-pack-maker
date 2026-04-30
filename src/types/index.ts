@@ -1,5 +1,5 @@
 interface Picture {
-	id: string | number;
+	id?: number;
 	name: string;
 	value: string;
 }
