@@ -2,25 +2,37 @@ import { memo } from "react";
 import placeholder from "../../assets/placeholder.svg";
 import styles from "./index.module.sass";
 import clsx from "clsx";
-import type { Picture } from "../../types";
+import { type Picture, type PictureHolderType } from "../../types";
+import usePictureHolder from "./usePictureHolder";
 
 interface PictureHolderProps {
 	className?: string;
 	picture: Picture;
+	mode?: PictureHolderType;
 }
 
 const PictureHolder = memo(function PictureHolder({
 	className,
 	picture,
+	mode = "edit",
 }: PictureHolderProps) {
-	// const { preview, name, handlePaste } = usePictureHolder();
-	// const pictureList = useContext(PictureContext);
+	const {
+		handlePictureDelete,
+		handlePictureAdd,
+		handlePictureEdit,
+		textInputRef,
+	} = usePictureHolder();
 
 	return (
 		<div className={clsx([styles["pic-holder"], className])}>
 			<div className={styles["pic-holder__header"]}>
 				<p className={styles["pic-holder__name"]}>{picture.name}</p>
-				{/* <span>{pictureList?.pictureList.join("-")}</span> */}
+				{mode !== "add" && (
+					<button
+						onClick={() => picture.id && handlePictureDelete(picture.id)}
+						className={styles["pic-holder__delete"]}
+					></button>
+				)}
 			</div>
 			<div className={styles["pic-holder__body"]}>
 				<img
@@ -31,7 +43,13 @@ const PictureHolder = memo(function PictureHolder({
 			</div>
 			<div className={styles["pic-holder__footer"]}>
 				<input
-					// onPaste={handlePaste}
+					// ref={textInputRef}
+					value={picture.url || ""}
+					onPaste={(e) => {
+						mode === "add"
+							? handlePictureAdd(e)
+							: handlePictureEdit(e, picture?.id);
+					}}
 					id=""
 					name=""
 					className={clsx([

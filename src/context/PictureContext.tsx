@@ -6,7 +6,7 @@ interface PictureProviderProps {
 	children: ReactNode | ReactNode[];
 }
 
-const initialState = [{ id: 0, value: "", name: "name" }];
+const initialState: Picture[] = [];
 
 //TODO: fix context type
 const PictureContext = createContext<Picture[] | null>(null);

@@ -5,13 +5,21 @@ import Grid from "../Grid";
 import PictureHolder from "../PictureHolder";
 import usePictures from "./usePictures";
 import placeholder from "../../assets/placeholder.svg";
+import type { Picture } from "../../types";
 
 interface PicturesProps {
 	className?: string;
 }
 
+const placeholderData: Picture = {
+	id: 0,
+	value: placeholder,
+	name: "Add picture",
+	url: "",
+};
+
 const Pictures: FC<PicturesProps> = ({ className }) => {
-	const { pictures, handleAddPicture } = usePictures();
+	const { pictures } = usePictures();
 
 	return (
 		<Container className={clsx([className])}>
@@ -22,9 +30,8 @@ const Pictures: FC<PicturesProps> = ({ className }) => {
 					</Grid.Cell>
 				))}
 				<Grid.Cell>
-					<button onClick={() => handleAddPicture(placeholder)}>Add</button>
+					<PictureHolder mode={"add"} picture={placeholderData} />
 				</Grid.Cell>
-				<Grid.Cell>Save</Grid.Cell>
 			</Grid>
 		</Container>
 	);

@@ -1,7 +1,8 @@
 interface Picture {
-	id?: number;
+	id: number;
 	name: string;
 	value: string;
+	url: string;
 }
 
 interface PictureAction {
@@ -11,12 +12,6 @@ interface PictureAction {
 
 type PictureActionType = "add" | "delete" | "edit";
 
-//TODO: this had to be an enum
-const pictureActionMap = {
-	add: "add",
-	delete: "delete",
-	edit: "edit",
-};
+type PictureHolderType = "add" | "edit";
 
-export type { Picture, PictureActionType, PictureAction };
-export { pictureActionMap };
+export type { Picture, PictureActionType, PictureAction, PictureHolderType };
