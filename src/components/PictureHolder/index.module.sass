@@ -3,33 +3,49 @@
 	position: relative
 	&__footer, &__header
 		background-color: rgba(0, 0, 0, .5)
+		position: relative
 	&__body
+		position: relative
 	&__header
-		position: absolute
 		top: 0
 		left: 0
 		right: 0
 		display: flex
 		align-items: center
 	&__footer
-		position: absolute
 		bottom: 0
 		left: 0
 		right: 0
 		display: flex
 		align-items: center
+		overflow: hidden
+		width: 100%
 	&__thumb
 		display: block
 		width: 100%
 	&__input
+		cursor: pointer
 		&--file
-		&--text
-			flex: 1
-			// inset: 0
-			// opacity: 0
-			// &:focus
-			// 	& ~ #{$root}__name
-			// 		background: red
+		&--paste
+			position: absolute
+			inset: 0
+			opacity: 0
+			&:focus
+				& ~ #{$root}__indicator
+					opacity: 1
+					visibility: visible
+	&__indicator
+		position: absolute
+		inset: 0
+		border: 3px solid black
+		opacity: 0
+		visibility: hidden
+		transition: all .5s
+		pointer-events: none
+		&--loading
+			border-color: green
+		&--error
+			border-color: red
 	&__name
 		margin: 0
 		color: white
@@ -45,6 +61,8 @@
 		background-size: contain
 		background-position: center
 		border-radius: 0
+	&__upload, &__url
+		min-width: 0
 
 .upload
 	position: relative
@@ -62,3 +80,14 @@
 		background-repeat: no-repeat
 		background-size: contain
 		background-position: center
+
+.url
+	overflow: hidden
+	width: 100%
+	border: 1px solid #FFFFFF
+	&__container
+		overflow-x: hidden
+		width: 0
+	&__value
+		white-space: nowrap
+		margin: 0

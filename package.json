@@ -11,8 +11,10 @@
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",
+		"normalize.css": "^8.0.1",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
+		"react-toastify": "^11.1.0",
 		"sass": "^1.99.0"
 	},
 	"devDependencies": {
