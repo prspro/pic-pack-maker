@@ -16,8 +16,14 @@ const PictureHolder = memo(function PictureHolder({
 	picture,
 	mode = "edit",
 }: PictureHolderProps) {
-	const { handlePictureDelete, handlePictureAdd, handlePictureEdit, stage } =
-		usePictureHolder();
+	const {
+		handlePicturePasteEdit,
+		handlePicturePasteAdd,
+		handlePictureUploadAdd,
+		handlePictureUploadEdit,
+		handlePictureDelete,
+		stage,
+	} = usePictureHolder();
 
 	return (
 		<div className={clsx([styles["pic-holder"], className])}>
@@ -39,8 +45,8 @@ const PictureHolder = memo(function PictureHolder({
 				<input
 					onPaste={(e) => {
 						mode === "add"
-							? handlePictureAdd(e)
-							: handlePictureEdit(e, picture?.id);
+							? handlePicturePasteAdd(e)
+							: handlePicturePasteEdit(e, picture?.id);
 					}}
 					id=""
 					name=""
@@ -60,6 +66,13 @@ const PictureHolder = memo(function PictureHolder({
 			<div className={styles["pic-holder__footer"]}>
 				<div className={clsx([styles["upload"], styles["pic-holder__upload"]])}>
 					<input
+						onChange={(e) => {
+							console.log("here");
+
+							mode === "add"
+								? handlePictureUploadAdd(e)
+								: handlePictureUploadEdit(e, picture?.id);
+						}}
 						id=""
 						name=""
 						className={clsx([
@@ -75,7 +88,10 @@ const PictureHolder = memo(function PictureHolder({
 				{picture.url && (
 					<div className={clsx([styles["url"], styles["pic-holder__url"]])}>
 						<div className={styles["url__container"]}>
-							<p className={clsx([styles["url__value"]])}>{picture.url}</p>
+							<p className={clsx([styles["url__value"]])}>
+								{/* {picture.url} */}
+								{"Has url"}
+							</p>
 						</div>
 					</div>
 				)}

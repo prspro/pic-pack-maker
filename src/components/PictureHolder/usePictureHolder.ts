@@ -67,7 +67,7 @@ const usePictureHolder = () => {
 		});
 	};
 
-	const handlePictureAdd = async (event: React.ClipboardEvent) => {
+	const handlePicturePasteAdd = async (event: React.ClipboardEvent) => {
 		const value = await handlePast(event);
 
 		if (!value) return;
@@ -86,7 +86,11 @@ const usePictureHolder = () => {
 		});
 	};
 
-	const handlePictureEdit = async (
+	const handlePicturePasteChange = () => {
+		//TODO: on edit url
+	};
+
+	const handlePicturePasteEdit = async (
 		event: React.ClipboardEvent,
 		id: number,
 		name = "edited",
@@ -108,10 +112,73 @@ const usePictureHolder = () => {
 		});
 	};
 
+	const handlePictureUploadAdd = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		//TODO: if file is the same, as previous, looks like no change is triggered so nothing happens
+		const fileList = event.target.files;
+
+		if (fileList && fileList.length > 0) {
+			const file = fileList[0];
+			const imageUrl = URL.createObjectURL(file);
+
+			//all is fine
+			setStage("default");
+
+			//clearing input value
+			event.target.value = "";
+
+			dispatch?.({
+				type: "add",
+				payload: {
+					value: imageUrl,
+					//TODO: fix or rework this if possible
+					id: 0,
+					name: "",
+					url: "",
+				},
+			});
+		}
+	};
+
+	const handlePictureUploadEdit = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		id: number,
+		name = "edited",
+	) => {
+		const fileList = event.target.files;
+
+		if (fileList && fileList.length > 0) {
+			const file = fileList[0];
+			const imageUrl = URL.createObjectURL(file);
+
+			//all is fine
+			setStage("default");
+
+			//clearing input value
+			event.target.value = "";
+
+			dispatch?.({
+				type: "edit",
+				payload: {
+					id: id,
+					name: name,
+					value: imageUrl,
+					url: "",
+				},
+			});
+		}
+	};
+
 	return {
+		//paste
+		handlePicturePasteEdit,
+		handlePicturePasteAdd,
+		//upload
+		handlePictureUploadAdd,
+		handlePictureUploadEdit,
+		//misc
 		handlePictureDelete,
-		handlePictureEdit,
-		handlePictureAdd,
 		stage,
 	};
 };
