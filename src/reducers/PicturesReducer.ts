@@ -19,13 +19,23 @@ function PicturesReducer(pictures: Picture[], action: PictureAction) {
 		case "delete": {
 			return pictures.filter((picture) => picture.id !== action.payload.id);
 		}
-		case "edit": {
+		case "edit-name": {
 			return pictures.map((picture) => {
 				if (picture.id === action.payload.id) {
 					return {
-						id: picture.id,
-						value: action.payload.value,
+						...picture,
 						name: action.payload.name,
+					};
+				} else {
+					return picture;
+				}
+			});
+		}
+		case "edit-url": {
+			return pictures.map((picture) => {
+				if (picture.id === action.payload.id) {
+					return {
+						...picture,
 						url: action.payload.url,
 					};
 				} else {
@@ -33,8 +43,20 @@ function PicturesReducer(pictures: Picture[], action: PictureAction) {
 				}
 			});
 		}
+		case "edit-value": {
+			return pictures.map((picture) => {
+				if (picture.id === action.payload.id) {
+					return {
+						...picture,
+						value: action.payload.value,
+					};
+				} else {
+					return picture;
+				}
+			});
+		}
 		default:
-			throw Error("Unknown action: " + action.type);
+			throw Error("Unknown action: " + action);
 	}
 }
 

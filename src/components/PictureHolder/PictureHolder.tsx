@@ -4,6 +4,7 @@ import styles from "./index.module.sass";
 import clsx from "clsx";
 import { type Picture, type PictureHolderType } from "../../types";
 import usePictureHolder from "./usePictureHolder";
+import EditField from "../EditField";
 
 interface PictureHolderProps {
 	className?: string;
@@ -22,13 +23,19 @@ const PictureHolder = memo(function PictureHolder({
 		handlePictureUploadAdd,
 		handlePictureUploadEdit,
 		handlePictureDelete,
+		handleNameEdit,
 		stage,
 	} = usePictureHolder();
 
 	return (
 		<div className={clsx([styles["pic-holder"], className])}>
 			<div className={styles["pic-holder__header"]}>
-				<p className={styles["pic-holder__name"]}>{picture.name}</p>
+				<EditField
+					isEditable={mode === "add" ? false : true}
+					name={picture.name}
+					onSave={(arg: string) => handleNameEdit(picture.id, arg)}
+					className={styles["pic-holder__name"]}
+				/>
 				{mode !== "add" && (
 					<button
 						onClick={() => picture.id && handlePictureDelete(picture.id)}

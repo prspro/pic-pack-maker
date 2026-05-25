@@ -60,9 +60,6 @@ const usePictureHolder = () => {
 			type: "delete",
 			payload: {
 				id: id,
-				name: "",
-				value: "",
-				url: "",
 			},
 		});
 	};
@@ -78,22 +75,14 @@ const usePictureHolder = () => {
 			type: "add",
 			payload: {
 				value: value.imageUrl,
-				//TODO: fix or rework this if possible
-				id: 0,
-				name: "",
 				url: value.url,
 			},
 		});
 	};
 
-	const handlePicturePasteChange = () => {
-		//TODO: on edit url
-	};
-
 	const handlePicturePasteEdit = async (
 		event: React.ClipboardEvent,
 		id: number,
-		name = "edited",
 	) => {
 		const value = await handlePast(event);
 
@@ -102,11 +91,16 @@ const usePictureHolder = () => {
 		setStage("default");
 
 		dispatch?.({
-			type: "edit",
+			type: "edit-value",
 			payload: {
 				id: id,
-				name: name,
 				value: value.imageUrl,
+			},
+		});
+		dispatch?.({
+			type: "edit-url",
+			payload: {
+				id: id,
 				url: value.url,
 			},
 		});
@@ -132,9 +126,6 @@ const usePictureHolder = () => {
 				type: "add",
 				payload: {
 					value: imageUrl,
-					//TODO: fix or rework this if possible
-					id: 0,
-					name: "",
 					url: "",
 				},
 			});
@@ -144,7 +135,6 @@ const usePictureHolder = () => {
 	const handlePictureUploadEdit = (
 		event: React.ChangeEvent<HTMLInputElement>,
 		id: number,
-		name = "edited",
 	) => {
 		const fileList = event.target.files;
 
@@ -159,15 +149,30 @@ const usePictureHolder = () => {
 			event.target.value = "";
 
 			dispatch?.({
-				type: "edit",
+				type: "edit-value",
 				payload: {
 					id: id,
-					name: name,
 					value: imageUrl,
+				},
+			});
+			dispatch?.({
+				type: "edit-url",
+				payload: {
+					id: id,
 					url: "",
 				},
 			});
 		}
+	};
+
+	const handleNameEdit = (id: number, name: string) => {
+		dispatch?.({
+			type: "edit-name",
+			payload: {
+				id: id,
+				name: name,
+			},
+		});
 	};
 
 	return {
@@ -179,6 +184,7 @@ const usePictureHolder = () => {
 		handlePictureUploadEdit,
 		//misc
 		handlePictureDelete,
+		handleNameEdit,
 		stage,
 	};
 };
