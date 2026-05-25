@@ -74,8 +74,6 @@ const PictureHolder = memo(function PictureHolder({
 				<div className={clsx([styles["upload"], styles["pic-holder__upload"]])}>
 					<input
 						onChange={(e) => {
-							console.log("here");
-
 							mode === "add"
 								? handlePictureUploadAdd(e)
 								: handlePictureUploadEdit(e, picture?.id);

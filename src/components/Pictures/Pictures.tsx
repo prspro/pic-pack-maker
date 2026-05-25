@@ -19,7 +19,7 @@ const placeholderData: Picture = {
 };
 
 const Pictures: FC<PicturesProps> = ({ className }) => {
-	const { pictures } = usePictures();
+	const { pictures, handleDownloadPictures } = usePictures();
 
 	return (
 		<Container className={clsx([className])}>
@@ -31,6 +31,9 @@ const Pictures: FC<PicturesProps> = ({ className }) => {
 				))}
 				<Grid.Cell>
 					<PictureHolder mode={"add"} picture={placeholderData} />
+				</Grid.Cell>
+				<Grid.Cell>
+					<button onClick={handleDownloadPictures}>download</button>
 				</Grid.Cell>
 			</Grid>
 		</Container>
